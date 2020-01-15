@@ -75,6 +75,18 @@ expectedResults = [
 //     username + ' [hair: ' + hairColor + ' eyes: ' + eyeColor + ']'
 //   ))
 
+// ALT SOLUTION 5: Reduce
+// const results = Object.entries(users)
+//   .reduce((acc, entry) => {
+//     const [username, { eyeColor, hairColor, isHuman }] = entry
+
+//     if (!isHuman) return acc
+
+//     const display = `${username} [hair: ${hairColor} eyes: ${eyeColor}]`
+
+//     return [...acc, display]
+//   }, [])
+
 
 const results = Object.entries(users)
   .filter(([, user]) => user.isHuman)
@@ -82,7 +94,7 @@ const results = Object.entries(users)
     `${username} [hair: ${hairColor} eyes: ${eyeColor}]`
   ))
 
-  // [
+// [
 //   'rob',
 //   { hairColor: 'purple(ish)', eyeColor: 'brown', isHuman: true }
 // ][1].isHuman
