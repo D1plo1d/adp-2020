@@ -24,5 +24,5 @@ class Unicorn {
 ) {
   console.log("SUCCESS")
 } else {
-  console.log('FAILURE :_( got: ', results, '\nexpected: ', expectedResults)
+  console.log('FAILURE :_( got: ', unicorns, '\nexpected: ', expectedResults)
 }
