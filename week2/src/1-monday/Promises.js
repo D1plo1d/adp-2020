@@ -1,43 +1,24 @@
-import React, { useState, useEffect } from 'react'
-
-// fetch('https://cat-fact.herokuapp.com/facts/')
-// .then((res) => res.json())
-// .then(nextData => setData(nextData))
-// .catch(e => setError(e))
+import React, { useState } from 'react'
 
 const App = () => {
   // useEffect(() => {
   const [data, setData] = useState(null)
-  const [error, setError] = useState(null)
+  const [data2, setData2] = useState(null)
 
-  // const fetchCatFacts = () => {
-  //   return fetch('https://cat-fact.herokuapp.com/facts/')
-  // }
+  if (!data) {
+    const p1 = fetch('https://cat-fact.herokuapp.com/facts/')
+      .then((res) => res.json())
+      .then(({id}) => fetch(`https://cat-fact.herokuapp.com/facts/${id}`))
 
-  const fetchCatFacts = async () => {
-    const res = await fetch(
-      'https://cat-fact.herokuapp.com/facts/'
-    )
+    const p2 = fetch('https://cat-fact.herokuapp.com/facts/')
+      .then((res) => res.json())
 
-    // const nextData = res.json()
-    const nextData = await res.json()
-
-    // => Error
-    console.log(nextData[0].catName)
-
-    setData(nextData)
-  }
-
-  useEffect(() => {
-    fetchCatFacts()
-  }, [])
-
-  if (error) {
-    return (
-      <div>
-        Oh no something went wrong: {error.message}
-      </div>
-    )
+    Promise.all([p1, p2])
+      .then(([data, data2]) => {
+        setData(data)
+        setData2(data2)
+      })
+      .catch((e) => console.log('SOMETHING WENT WRONG', e))
   }
 
   return(
